@@ -1,0 +1,25 @@
+{
+  "name": "task-3",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000P\u0000R\u0000O\u0000D\u0000I\u0000G\u0000Y\u0000_\u0000B\u0000D\u0000_\u00000\u00003\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.15.2",
+    "validator": "^13.15.15"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
