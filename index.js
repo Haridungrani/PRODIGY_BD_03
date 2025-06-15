@@ -11,13 +11,13 @@ app.use('/api/users', userRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Server Error' });
+    console.error(err.stack);
+    res.status(500).json({ message: 'Server Error' });
 });
 
 //check if the server is running
 app.get('/', (req, res) => {
-  res.send('API is running...');
+    res.send('API is running...');
 });
 
 const PORT = process.env.PORT || 5000;

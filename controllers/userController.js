@@ -1,11 +1,9 @@
-const express = require('express');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 
-// Generate JWT token
+// Generate JWT token (expires in 30 minutes)
 const generateToken = (id, role) => {
-    return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: '2m' });
 };
 
 // Register
@@ -16,10 +14,9 @@ exports.register = async (req, res) => {
         const exists = await User.findOne({ email });
         if (exists) return res.status(400).json({ error: 'Email already registered' });
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await User.create({ name, email, password: hashedPassword, role });
-
+        const user = await User.create({ name, email, password, role }); // Password will be auto-hashed by model
         const token = generateToken(user._id, user.role);
+
         res.status(201).json({
             message: 'User registered successfully',
             token,
@@ -36,7 +33,7 @@ exports.login = async (req, res) => {
 
     try {
         const user = await User.findOne({ email });
-        if (!user || !(await bcrypt.compare(password, user.password))) {
+        if (!user || !(await user.matchPassword(password))) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
@@ -51,7 +48,8 @@ exports.login = async (req, res) => {
     }
 };
 
-// Protected Profile Route
+// Profile
 exports.getProfile = (req, res) => {
     res.json(req.user);
 };
+
